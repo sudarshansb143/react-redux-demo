@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 //hooks by react-redux
 import { useSelector, useDispatch } from "react-redux";
@@ -8,26 +8,28 @@ const AllAction = require("../actions");
 
 //component body
 function BaseComponent() {
-  //subscribee data drom store
+  //subscribee data from store
   const counter = useSelector((state) => state.counter);
   const currentUser = useSelector((state) => state.currentUser);
-  const [username, setUsername] = useState("");
 
   //store dispatch to dispatch actions
   const dispatch = useDispatch();
 
-  let defaultUser = { name: "Jack" };
+  //custom internal state
+  const [username, setUsername] = useState("");
 
+  let defaultUser = { name: "Jack" }
+  //login code
   useEffect(() => {
     dispatch(AllAction.loginAction(defaultUser));
-  }, []);
+  }, [dispatch]);
 
-
-  function handleLogin () {
-    if(!username.toString().trim()) return
-    console.log("uname", username)
-    dispatch(AllAction.loginAction({ name: username }))
+  function handleLogin() {
+    if (!username.toString().trim()) return;
+    console.log("uname", username);
+    dispatch(AllAction.loginAction({ name: username }));
   }
+
   return (
     <>
       <div>
@@ -39,8 +41,7 @@ function BaseComponent() {
                 className="btn btn-danger"
                 onClick={() => dispatch(AllAction.logoutAction())}
               >
-                {" "}
-                logout{" "}
+                logout
               </button>
             </div>
           </>
@@ -56,10 +57,7 @@ function BaseComponent() {
                 required
                 className="form-control"
               />
-              <button
-                className="btn btn-primary"
-                onClick={handleLogin}
-              >
+              <button className="btn btn-primary" onClick={handleLogin}>
                 {" "}
                 Login{" "}
               </button>
@@ -70,11 +68,17 @@ function BaseComponent() {
       <div className="text-center bg-secondary py-3">
         <h1 className="text-white my-3"> Counter Value is {counter}</h1>
         <button
-          className="btn btn-primary text-white py-2"
+          className="btn btn-success text-white py-2"
           onClick={() => dispatch(AllAction.addCounter())}
         >
-          {" "}
-          Increment{" "}
+          Increment
+        </button>
+        &nbsp; &nbsp;
+        <button
+          className="btn btn-danger text-white py-2"
+          onClick={() => dispatch(AllAction.substractCounter())}
+        >
+          Decrement
         </button>
       </div>
     </>

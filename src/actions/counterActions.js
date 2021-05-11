@@ -4,7 +4,9 @@ function counterAdd() {
   };
 }
 
+//action creaters  emmits ===> actions
 function counterSubstract() {
+  //Action Objects
   return {
     type: "DECREMENT",
   };
